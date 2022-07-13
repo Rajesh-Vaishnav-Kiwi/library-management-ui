@@ -12,17 +12,25 @@ const createBook = () => {
     formState: { errors },
   } = useForm();
   const [values, setValue] = useState({
-    title: "",
-    author: "",
-    ISBN: "",
+    title: "ramayan",
+    author: "valmiki",
+    ISBN: "123456789",
   });
   const [tokens, setTokens] = useState("");
+  const [bookId,setBookId] = useState("");
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("myData"));
     if (token) {
       setTokens(token);
     }
   }, []);
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("BookId"));
+    if (token) {
+      setBookId(token);
+    }
+  }, []);
+
   console.log(tokens);
   const onSubmit =  (data) => {
     console.log(data);
@@ -34,7 +42,11 @@ const createBook = () => {
         'authorization': `${tokens}`,
       }
     axios.post("http://localhost:4000/book",val,{headers:headers})
-    .then(res => console.log(res))
+    .then(res =>
+      {   console.log(res.data)
+    alert("New Book Issued")
+    localStorage.setItem("BookId", JSON.stringify(res.data.newBook._id));
+      }).catch(res => alert(res.response.data.Message))
   };
   return (
     <div className={styles.container}>

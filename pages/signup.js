@@ -20,9 +20,6 @@ export default function SignUp() {
   const [userId, setUserId] = useState("");
   const [val, setVal] = useState(false);
   const router = useRouter();
-  const handleLogin = () => {
-    router.push("./login");
-  };
   const onSubmit = (data) => {
     console.log(data);
     const { fullName, email, password, role, adminCode } = datas;
@@ -35,32 +32,26 @@ export default function SignUp() {
       axios
         .post("http://localhost:4000/signup", user)
         .then(function (response) {
-          setVal(true);
           console.log(response);
-        });
+          alert("welcome" + " "+ datas.fullName)
+        })
+        .then(()=>  router.push("./userLayout"))
     }
     if (user.role === "admin") {
       setUserId(true);
     }
     if (user.role === "admin") {
       {
-        userId &&
-     
+        userId &&    
         axios
         .post("http://localhost:4000/signup", user)
         .then(function (response) {
-          setVal(true);
           console.log(response);
-        });
+          alert("welcome" + " "+ datas.fullName)
+        })
+    }
+      (alert("Admin already exist,Please Login"))
       }
-    }
-    if (val === true) {
-      window.alert("Welcome" + "" + fullName);
-      router.push("./userLayout");
-    }
-    // else {
-    //   window.alert("Already Exist || Please Login?");
-    // }
   };
   return (
     <div className={styles.container}>
@@ -130,7 +121,7 @@ export default function SignUp() {
         <input type="submit" />
         <br />
         <h1>If already a user?Do click on Login</h1>
-        <button onClick={handleLogin}>Login</button>
+        <button onClick={() =>router.push("./login")}>Login</button>
       </form>
     </div>
   );

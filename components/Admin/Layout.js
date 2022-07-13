@@ -1,15 +1,12 @@
 import React from "react";
 import Link from "next/link"
-const Nav = () => {
+const Layout = () => {
   return (
     <>
       <nav >
         <ul>
         <li>
-            <Link href="/adminLayout"><a>Home</a></Link>
-          </li>
-          <li>
-            <Link href="/changePassword"><a>Change Password</a></Link>
+            <Link href="/adminLayout"><a></a></Link>
           </li>
           <li>
             <Link href="/createBook"><a>Create Book</a></Link>
@@ -23,4 +20,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default Layout;

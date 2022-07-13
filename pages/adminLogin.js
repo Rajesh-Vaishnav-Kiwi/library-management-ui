@@ -10,13 +10,13 @@ const login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [changeroute, setChangeroute] = useState(false);
   const [tokens, setTokens] = useState("");
   const [datas, setData] = useState({
     email: "",
     password: "",
   });
   const router = useRouter();
+  const err = "invalid"
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("myData"));
     if (token) {
@@ -24,7 +24,7 @@ const login = () => {
     }
   }, []);
   console.log(tokens);
-  const onSubmit = (e, data) => {
+  const onSubmit = (data) => {
     console.log(data);
 
     const { email, password } = datas;
@@ -34,16 +34,13 @@ const login = () => {
       'authorization': `${tokens}`,
     }
     axios.post("http://localhost:4000/admin-login", val,{headers:headers}).then((res) => {
-      setChangeroute(true);
+      alert("Login SuccessFully")
+      router.push("./adminLayout");
       console.log(res);
       localStorage.setItem("myData", JSON.stringify(res.data.token));
-    });
-    if (changeroute == true) {
-      window.alert("Login SuccessFully");
-      router.push("./adminLayout");
-    } else 
+    }).catch(err)
     {
-      window.alert("Login Id n Password Incorrect");
+      console.log(err);
     }
   };
 

@@ -10,12 +10,12 @@ const login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [changeroute, setChangeroute] = useState(false);
   const [tokens, setTokens] = useState("");
   const [datas, setData] = useState({
     email: "",
     password: "",
   });
+  const error ="sorry"
   const router = useRouter();
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("myData"));
@@ -24,27 +24,26 @@ const login = () => {
     }
   }, []);
   console.log(tokens);
-  const onSubmit = (e, data) => {
+  const onSubmit = (data) => {
     console.log(data);
 
     const { email, password } = datas;
     const val = { email, password };
     const headers = {
-      'Content-Type': 'application/json',
-      'authorization': `${tokens}`,
-    }
-    axios.post("http://localhost:4000/user-login", val,{headers:headers}).then((res) => {
-      setChangeroute(true);
-      console.log(res);
-      localStorage.setItem("myData", JSON.stringify(res.data.token));
-    });
-    if (changeroute == true) {
-      window.alert("Login SuccessFully");
-      router.push("./userLayout");
-    } else 
-    {
-      window.alert("Login Id n Password Incorrect");
-    }
+      "Content-Type": "application/json",
+      authorization: `${tokens}`,
+    };
+      axios
+      .post("http://localhost:4000/user-login", val, { headers: headers })
+      .then((res) => {
+        alert("Login SuccessFully");
+        console.log(res);
+        localStorage.setItem("myData", JSON.stringify(res.data.token));
+        router.push("./userLayout");
+      }).catch (error)
+       {
+        console.log(error);
+      }
   };
 
   return (
